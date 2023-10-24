@@ -6,7 +6,7 @@
 
 ---
 
-# Adversarial Search
+# Introduction to Adversarial Search
 
 Adversarial search is a type of search algorithm used in game theory to find the
 optimal move for a player in a game where the outcome depends on the moves of
@@ -20,7 +20,7 @@ checkers, and Go, where the outcome of the game depends on the moves of both
 players. These algorithms use heuristics to evaluate the utility of a game state
 and search through the game tree to find the optimal move.
 
-## Main Topics
+**Main Topics**
 
 1. Advesarial Search
 2. Minimax Algorithm
@@ -29,7 +29,7 @@ and search through the game tree to find the optimal move.
 5. Isolation Game Player
 6. Multiplayer, Probabilstic Games
 
-## Lesson Outline
+# Lesson: Search in Multi-agent Domains
 
 - The MINMAX algorithm
 - Isolation
@@ -151,19 +151,150 @@ Notes:
 
 The number of nodes that need to be explored is exponential with depth of the
 tree. The average branching factor is the number of children each node has on
-average over the course of the game. In other words, it represents have many
+average over the course of the game. In other words, it represents how many
 possible moves there are at each turn.
 
-The number of nodes that need to be explored is the branching factor raised to
-the power of the depth of the tree. If $b$ is the average branching factor and
-$d$ is the depth of the tree, then the number of nodes that need to be explored
-is $b^d$.
+The number of nodes that need to be explored is the average branching factor
+raised to the power of the depth of the tree. If $b$ is the average branching
+factor and $d$ is the depth of the tree, then the number of nodes that need to
+be explored is $b^d$.
 
 For a `5x5` Queens isolation game you have an average branching factor of around
 8 and a depth of 25. This means that the number of nodes that need to be
 explored is $8^{25}$ which is around $10^{22}$. Given a processor that could
 compute $10^{9}$ calculations per second, we would need to wait around 1.2
 million years to get our answer.
+
+# Lesson: Optimizing Minimax Search
+
+- Depth-limited search
+- Evaluation function
+- Testing the evaluation function
+- Quiescent search
+- Iterative deepening
+- Varying the branching factor
+- Horizon effect
+- Alpha-Beta pruning
+
+## Depth-limited Search
+
+Depth-limited search is a variation of the minimax algorithm that limits the
+depth of the game tree that is explored. This is done by adding a depth limit
+parameter to the `minimax_decision` function. The depth limit parameter
+specifies the maximum depth of the game tree that should be explored and is
+passed to the `min_value` and `max_value` functions. These functions check if
+the depth limit has been reached and return the value of the evaluation function
+if it has.
+
+Suppose that the agent has a time limit to make a decision on its next move of
+the game. If we know that the algorithm can compute $10^9$ nodes per second and
+we have a time limit of 2 seconds, then we would be able to compute $2x10^9$
+nodes in 2 seconds. To find the depth limit we can use the following formula:
+
+$b^d < 2\!\times\! 10^9$
+
+For a `5x5` Queens isolation game you have an average branching factor of around
+8. This means that the depth limit is around 10.
+
+$8^d < 2\!\times\! 10^9$
+
+$log_8(8^d) < log_8(2\!\times\! 10^9)$
+
+$d < log_8(2\!\times\! 10^9)$
+
+Note that:
+
+$log_a(x) < \frac{log_b(x)}{log_b(a)}$
+
+So the formula becomes:
+
+$x < \frac{log_{10}(2\times 10^9)}{log_{10}(8)} = 10.3$
+
+In this example, the depth limit would be 10.
+
+## Evaluation Functions
+
+An evaluation function (also called a heuristic function) is a function that
+estimates the utility value of a game state. It is analogous to a fitness metric
+or objective function. The evaluation function is used to evaluate non-terminal
+game states and determine which is the best move for the active player.
+
+An example evaluation function for the `5x5` Queens isolation game would be "the
+number of moves available to the active player".
+
+Figure \ref{fig:eval} shows the evaluation function for the a simple `2x3` game.
+
+![Evaluation Function \label{fig:eval}](./figs/evaluation_function.png)
+
+At this point the minimax code has been modified as follows:
+
+        player_id = 0
+        
+        def my_moves(gameState):
+            """ Returns the number of moves available for the player_id 
+            at their current location.
+            """
+            loc = gameState._player_locations[player_id]
+            return len(gameState.liberties(loc))
+          
+        
+        def minimax_decision(gameState, depth):
+            """ Return the move along a branch of the game tree that
+            has the best possible value.  A move is a pair of coordinates
+            in (column, row) order corresponding to a legal move for
+            the searching player.
+            
+            You can ignore the special case of calling this function
+            from a terminal state.
+            """
+            best_score = float("-inf")
+            best_move = None
+            for a in gameState.actions():
+                # call has been updated with a depth limit
+                v = min_value(gameState.result(a), depth - 1)
+                if v > best_score:
+                    best_score = v
+                    best_move = a
+            return best_move
+        
+        
+        def min_value(gameState, depth):
+            """ Return the value for a win (+1) if the game is over,
+            otherwise return the minimum value over all legal child
+            nodes.
+            """
+            if gameState.terminal_test():
+                return gameState.utility(0)
+            
+            # TODO: New conditional depth limit cutoff
+            if depth <= 0:  # "==" could be used, but "<=" is safer 
+                return my_moves(gameState)
+            
+            v = float("inf")
+            for a in gameState.actions():
+                # the depth should be decremented by 1 on each call
+                v = min(v, max_value(gameState.result(a), depth - 1))
+            return v
+        
+        
+        def max_value(gameState, depth):
+            """ Return the value for a loss (-1) if the game is over,
+            otherwise return the maximum value over all legal child
+            nodes.
+            """
+            if gameState.terminal_test():
+                return gameState.utility(0)
+            
+            # TODO: New conditional depth limit cutoff
+            if depth <= 0:  # "==" could be used, but "<=" is safer 
+                return my_moves(gameState)
+            
+            v = float("-inf")
+            for a in gameState.actions():
+                # the depth should be decremented by 1 on each call
+                v = max(v, min_value(gameState.result(a), depth - 1))
+            return v
+
 
 \newpage
 \center{--- The End ---}
