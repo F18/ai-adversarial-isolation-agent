@@ -295,6 +295,60 @@ At this point the minimax code has been modified as follows:
                 v = max(v, min_value(gameState.result(a), depth - 1))
             return v
 
+## Queiescent Search
+
+Note tha the evaluation function can vary quite a bit depending on the depth
+factor or limit imposed. For example, the number of moves remaining will be very
+different near the root of the three than near the bottom of the tree. To know
+if you are searching "deep enough" you can check if the results are varying
+widely between levels. So you might set your depth limit based on the fact that
+the evaluation function is no longer changing (or not widely) between levels.
+
+We don't have to play quiescent search all the time, since it is costly, but it
+may be a good idea to play it near the beginning or near the end of the game.
+
+## Iterative Deepening
+
+Iterative deepening is a variation of depth-limited search that gradually
+increases the depth limit until a terminal state is found. This is done by
+repeatedly calling the `minimax_decision` function with an increasing depth
+limit until a terminal state is found.
+
+Iterative deepening is useful when the depth of the game tree is unknown. It is
+also useful when the time limit is unknown or when the time limit is very short.
+In these cases, iterative deepening can be used to explore the game tree as much
+as possible within the time limit.
+
+The idea is get an answer for level 1 and keep it just in case you run out of
+time. Then go to level 2 and so on. If you run out of time you can use the
+answer from the last level searched to completion.
+
+Here are a few more resources to further your understanding of Iterative Deepening:
+
+- University of British Columbia's
+  **[slides](https://www.cs.ubc.ca/~hutter/teaching/cpsc322/2-Search6-final.pdf)**
+  introducing the topic.
+- 3.4.5 of Russel, Norvig textbook
+- A set of **[videos](https://movingai.com/dfid.html)** showing visually how
+  Iterative Deepening is different from DFS in practice.
+
+The main difference between iterative deepening depth-first search and breadth
+first search is that BFS stores the state (responses) of each visited node in
+memory, whereas IDDF revisits previous nodes multiple times, but only stores the
+state of the current node in memory. Each iteration of iterative deepening
+search generates a new level, in the same way that breadth- first search does,
+but breadth-first does this by storing all nodes in memory, while
+iterative￾deepening does it by repeating the previous levels, thereby saving
+memory at the cost of more time. In an iterative deepening search, the nodes on
+the bottom level (depth d) are generated once, those on the next-to-bottom level
+are generated twice, and so on, up to the children of the root, which are
+generated d times. Unlike BFS, iterative deepening allows you to set a depth
+limit of more than one level, which is useful if you have the time.
+
+**Idea:** I suppose you could use BFS with a depth limit of more than 1.
+Converserly, you could to IDDF while storing the results. In other words, you
+could still store the state values of the nodes so that you do not need to
+revisit them.
 
 \newpage
 \center{--- The End ---}
