@@ -350,5 +350,86 @@ Converserly, you could to IDDF while storing the results. In other words, you
 could still store the state values of the nodes so that you do not need to
 revisit them.
 
-\newpage
-\center{--- The End ---}
+The Figure \ref{fig:iterative} shows the iterative deepening search and counts
+the number of nodes in the tree as well as the number of nodes visited by the
+iterative deepening search.
+
+The general formula for the number of nodes in the tree is:
+
+$n = \frac{k^{d+1} - 1}{k-1}$
+
+where:
+
+- $k$ is the average branching factor
+- $d$ is the depth of the tree
+- $n$ is the number of nodes in the tree at the given depth (or level)
+
+![Iterative Deepening Search \label{fig:iterative}](./figs/iterative_deep.png)
+
+**Strategy:** In a game in which your total time is limited, such as speed
+chess, it may be wise to vary the depth limit based on the amount of time
+remaining. For example, you might set the depth limit to 1 when you have 10
+seconds remaining, and set the depth limit to 2 when you have 20 seconds
+remaining. This would allow you to explore the game tree as much as possible
+within the time limit. The branching factor will also vary during a game
+(usually higher at the beginning then at the end). As such, it may be wise to
+search less deep at the beggingn of the game and deeper at the end of the game.
+Or perhaps you search less deep (or through a catalogue of standard moves) at
+the beginning of the game, most deep in the middle, then less deep at the end
+relying on the fact that the branching factor will be smaller. 
+
+## Alpha-Beta Pruning
+
+Alpha-beta pruning is a variation of the minimax algorithm that eliminates the
+need to explore subtrees of moves which are guaranteed to be worse than the best
+move found so far. This is done by keeping track of two values, alpha and beta,
+which represent the minimum score that the maximizing player is assured of and
+the maximum score that the minimizing player is assured of, respectively. It
+does not change the final answer but it it more efficient than minimax.
+
+Recall that the minimax algorithm switches at each level between minimizing and
+maximizing. For example, suppose the root node (level 0) takes the **min** from
+level 1, then level 1 will take the **max** from level 2. So if we are doing depth first search and the left most branch at level 1 takes on a value of say 2 (the max from its children nodes) then in any following nodes at level 1, there is no need to search all of the children in level 2. As soon as any level 2 gives a value of 2, we know there is no need to keep maximizing. Ultimately, level 0 will be taking the min from level 1 anyway, so even if level 1 returned a higher value in another one of its nodes, the level 0 minimizer, will still take 2 as the its value.
+
+Figure \ref{fig:alpha-beta} shows an example of the alpha-beta pruning approach.
+
+![Alpha-Beta Pruning \label{fig:alpha-beta}](./figs/alpha-beta.png)
+
+Alpha-beta pruning can reduce the computational cost significantly! The typical cost is on the order of $O(b^{d})$ for minimax, $O(b^{d/2})$ for alpha-beta pruning (optimal ordering) and $O(b^{3d/4})$ for random ordering.
+
+### Pseudo-code
+
+Figure \ref{fig:alpha-beta-pseudo} shows the pseudo-code for the alpha-beta pruning algorithm.
+
+![Alpha-Beta Pruning Pseudo-code \label{fig:alpha-beta-pseudo}](./figs/alpha-beta-pseudo.png)
+
+Alpha-beta pruning modifies the minimax algorithm by introducing two new
+variables: α -- the maximum lower bound of the minimax value -- and β -- the
+minimum upper bound of the minimax value. In other words: at every state in the
+game tree α represents the guaranteed worst-case score that the MAX player could
+achieve, and β represents the guaranteed worst-case score that the MIN player
+could achieve.
+
+The estimates of α are only updated in each MAX node, while β is only updated in
+each MIN node. If the estimate of the upper bound is ever lower than the
+estimate of the lower bound in any state, then the search can be cut off because
+there are no values between the upper and lower bounds. Practically this means
+that your agent could do better by making a different move earlier in the game
+tree to avoid the pruned state.
+
+Implementing alpha-beta pruning in minimax only adds the two new variables
+(alpha & beta), and adds a conditional branch to the MIN and MAX nodes to break
+and return the appropriate bound when a state is pruned. (See the pseudocode
+above & compare with the minimax algorithm.)
+
+There's one more difference you'll notice between minimax and alpha-beta: the
+alpha-beta search function seems to call the max_value()helper from the root
+node, while minimax calls the min_value()helper. But the pseudocode for
+alpha-beta search is just hiding some additional complexity: calling max_value()
+returns the score of the best branch -- but it doesn't tell you what the best
+branch is. You can implement the algorithm just like the minimax-decision
+function if you modify it to update alpha between branches.
+
+
+
+ \newpage \center{--- The End ---}
