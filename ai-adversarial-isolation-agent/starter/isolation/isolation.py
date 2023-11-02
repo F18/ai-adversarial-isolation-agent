@@ -177,6 +177,16 @@ class Isolation(NamedTuple('Isolation', [('board', int), ('ply_count', int), ('l
         """
         return any(self.liberties(self.locs[player_id]))
 
+    def board_size(self):
+        """ Return the size of the board
+
+        Returns
+        -------
+        int
+            The total number of cells on the board
+        """
+        return _SIZE
+
 
 class DebugState(Isolation):
     """ Extend the Isolation game state class with utility methods for debugging &

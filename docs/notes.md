@@ -346,7 +346,7 @@ generated d times. Unlike BFS, iterative deepening allows you to set a depth
 limit of more than one level, which is useful if you have the time.
 
 **Idea:** I suppose you could use BFS with a depth limit of more than 1.
-Converserly, you could to IDDF while storing the results. In other words, you
+Conversely, you could to IDDF while storing the results. In other words, you
 could still store the state values of the nodes so that you do not need to
 revisit them.
 
@@ -373,10 +373,10 @@ seconds remaining, and set the depth limit to 2 when you have 20 seconds
 remaining. This would allow you to explore the game tree as much as possible
 within the time limit. The branching factor will also vary during a game
 (usually higher at the beginning then at the end). As such, it may be wise to
-search less deep at the beggingn of the game and deeper at the end of the game.
+search less deep at the beginning of the game and deeper at the end of the game.
 Or perhaps you search less deep (or through a catalogue of standard moves) at
 the beginning of the game, most deep in the middle, then less deep at the end
-relying on the fact that the branching factor will be smaller. 
+relying on the fact that the branching factor will be smaller.
 
 ## Alpha-Beta Pruning
 
@@ -404,27 +404,31 @@ Figure \ref{fig:alpha-beta-pseudo} shows the pseudo-code for the alpha-beta prun
 ![Alpha-Beta Pruning Pseudo-code \label{fig:alpha-beta-pseudo}](./figs/alpha-beta-pseudo.png)
 
 Alpha-beta pruning modifies the minimax algorithm by introducing two new
-variables: α -- the maximum lower bound of the minimax value -- and β -- the
-minimum upper bound of the minimax value. In other words: at every state in the
-game tree α represents the guaranteed worst-case score that the MAX player could
-achieve, and β represents the guaranteed worst-case score that the MIN player
-could achieve.
+variables: $\alpha$ -- the maximum lower bound of the minimax value -- and
+$\beta$ -- the minimum upper bound of the minimax value. In other words: at
+every state in the game tree $\alpha$ represents the guaranteed worst-case score
+that the MAX player could achieve, and $\beta$ represents the guaranteed
+worst-case score that the MIN player could achieve. Alpha–beta search updates
+the values of $\alpha$ and $\beta$ as it goes along and prunes the remaining
+branches at a node (i.e., terminates the recursive call) as soon as the value of
+the current node is known to be worse than the current $\alpha$ or $\beta$ value
+for MAX or MIN, respectively.
 
-The estimates of α are only updated in each MAX node, while β is only updated in
-each MIN node. If the estimate of the upper bound is ever lower than the
-estimate of the lower bound in any state, then the search can be cut off because
-there are no values between the upper and lower bounds. Practically this means
-that your agent could do better by making a different move earlier in the game
-tree to avoid the pruned state.
+The estimates of $\alpha$ are only updated in each MAX node, while $\beta$ is
+only updated in each MIN node. If the estimate of the upper bound is ever lower
+than the estimate of the lower bound in any state, then the search can be cut
+off because there are no values between the upper and lower bounds. Practically
+this means that your agent could do better by making a different move earlier in
+the game tree to avoid the pruned state.
 
 Implementing alpha-beta pruning in minimax only adds the two new variables
-(alpha & beta), and adds a conditional branch to the MIN and MAX nodes to break
-and return the appropriate bound when a state is pruned. (See the pseudocode
-above & compare with the minimax algorithm.)
+($\alpha$ and $\beta$), and adds a conditional branch to the MIN and MAX nodes to
+break and return the appropriate bound when a state is pruned. (See the
+pseudocode above & compare with the minimax algorithm.)
 
 There's one more difference you'll notice between minimax and alpha-beta: the
 alpha-beta search function seems to call the max_value()helper from the root
-node, while minimax calls the min_value()helper. But the pseudocode for
+node, while minimax calls the min_value() helper. But the pseudocode for
 alpha-beta search is just hiding some additional complexity: calling max_value()
 returns the score of the best branch -- but it doesn't tell you what the best
 branch is. You can implement the algorithm just like the minimax-decision
