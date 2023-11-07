@@ -54,12 +54,19 @@ class CustomPlayer(DataPlayer):
 
         # Define heuristics
         # -----------------
+        # 0 = Standard (my_moves - opp_moves) strategy
         # 1 = Offensive strategy
         # 2 = Defensive strategy
         # 3 = Dynamic offensive to defensive strategy
         heuristic = 3
 
-        if heuristic == 1:
+        if heuristic == 0:
+            # This is the standard baseline heuristic, which is the difference
+            # between the number of moves available to the player and the number
+            # of moves available to the opponent
+            return own_lib - opp_lib
+
+        elif heuristic == 1:
             # This offensive heuristic puts more weight on increasing its own
             # liberties than on limiting the opponent's liberties
             m = 0.25
