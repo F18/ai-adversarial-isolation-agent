@@ -43,7 +43,7 @@ class CustomPlayer(DataPlayer):
             # randomly select a move as player 1 or 2 on an empty board
             self.queue.put(random.choice(state.actions()))
         else:
-            # return the optimal minimax move at a fixed search depth
+            # return the optimal minimax move
             self.queue.put(self.alpha_beta_search(state, depth=5))
 
     def score(self, state):
@@ -54,27 +54,27 @@ class CustomPlayer(DataPlayer):
 
         # Define heuristics
         # -----------------
-        # 0 = Standard (my_moves - opp_moves) strategy
-        # 1 = Offensive strategy
-        # 2 = Defensive strategy
-        # 3 = Dynamic offensive to defensive strategy
-        heuristic = 3
+        # 1 = Standard (my_moves - opp_moves) strategy
+        # 2 = Offensive strategy
+        # 3 = Defensive strategy
+        # 4 = Dynamic offensive to defensive strategy
+        heuristic = 1
 
-        if heuristic == 0:
+        if heuristic == 1:
             # This is the standard baseline heuristic, which is the difference
             # between the number of moves available to the player and the number
             # of moves available to the opponent
             return own_lib - opp_lib
 
-        elif heuristic == 1:
+        elif heuristic == 2:
             # This offensive heuristic puts more weight on increasing its own
             # liberties than on limiting the opponent's liberties
             m = 0.25
-        elif heuristic == 2:
+        elif heuristic == 3:
             # This defensive heuristic puts more weight on limiting the
             # opponent's liberties than on increasing its own liberties
             m = 0.75
-        elif heuristic == 3:
+        elif heuristic == 4:
             # This dynamic heuristic gives a sense of time in the game by taking
             # the ratio of the number of moves played to the total number of
             # moves available on the board. This ratio is used to apply a smooth
