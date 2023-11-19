@@ -109,10 +109,9 @@ to evaluate the heuristic. In the case of Knights Isolation, the maximum number 
 branches is 8 and the default time limit is 150 milliseconds. As such, it was assumed
 that the search depth that could be achieved by the custom agent is equal to or greater
 than 5. The computational expense of computing all of the heuristics investigated in
-this project is essentially identical for all intents and purposes. As such, the search
-speed is not a key differentiator and does not seem to matter as much as the accuracy or
-strategy of the heuristic. Furthermore, since the depth limit is restricted to 5, as
-opposed to unlimited, the accuracy of the heuristic seems to be more important than the
-speed of the search, especially given that these heuristic are extremely rapid to
-evaluate, which, in turn, enables the agent to explore to the full depth limit at each
-move.
+this project is essentially identical for all intents and purposes, particularly when
+$h1$ is equivalent to $m=0.5$. As such, the search speed is not a key differentiator and
+does not seem to matter as much as the accuracy or strategy of the heuristic (in the
+studies herein). Furthermore, since the depth limit was restricted to 5 and the players
+were observed to consistently explore to the full depth limit at each turn, the accuracy
+of the heuristic seems to be more important than the speed of the search.

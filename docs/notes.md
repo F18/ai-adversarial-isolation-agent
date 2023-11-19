@@ -8,17 +8,16 @@
 
 # Introduction to Adversarial Search
 
-Adversarial search is a type of search algorithm used in game theory to find the
-optimal move for a player in a game where the outcome depends on the moves of
-multiple players. In adversarial search, the algorithm considers the possible
-moves of both players and tries to find the best move for the current player
-while assuming that the opponent will make the best possible move for
-themselves.
+Adversarial search is a type of search algorithm used in game theory to find the optimal
+move for a player in a game where the outcome depends on the moves of multiple players.
+In adversarial search, the algorithm considers the possible moves of both players and
+tries to find the best move for the current player while assuming that the opponent will
+make the best possible move for themselves.
 
-Adversarial search algorithms are commonly used in games such as chess,
-checkers, and Go, where the outcome of the game depends on the moves of both
-players. These algorithms use heuristics to evaluate the utility of a game state
-and search through the game tree to find the optimal move.
+Adversarial search algorithms are commonly used in games such as chess, checkers, and
+Go, where the outcome of the game depends on the moves of both players. These algorithms
+use heuristics to evaluate the utility of a game state and search through the game tree
+to find the optimal move.
 
 **Main Topics**
 
@@ -42,23 +41,22 @@ and search through the game tree to find the optimal move.
 
 ## The MINIMAX Algorithm
 
-The minimax algorithm is a recursive algorithm. It explores the game tree by
-recursively evaluating the utility values of different game states.
+The minimax algorithm is a recursive algorithm. It explores the game tree by recursively
+evaluating the utility values of different game states.
 
-The algorithm starts at the root node and considers all possible moves that the
-active player can make. For each possible move, it recursively calls itself to
-evaluate the utility values of the resulting game states. This process continues
-until it reaches a terminal state, where the game is over and a utility value
-can be assigned.
+The algorithm starts at the root node and considers all possible moves that the active
+player can make. For each possible move, it recursively calls itself to evaluate the
+utility values of the resulting game states. This process continues until it reaches a
+terminal state, where the game is over and a utility value can be assigned.
 
-During the recursive process, the algorithm alternates between the "Max" and
-"Min" players, maximizing and minimizing the utility values, respectively. The
-algorithm assumes that both players will make optimal moves to maximize or
-minimize the utility value, depending on their role.
+During the recursive process, the algorithm alternates between the "Max" and "Min"
+players, maximizing and minimizing the utility values, respectively. The algorithm
+assumes that both players will make optimal moves to maximize or minimize the utility
+value, depending on their role.
 
-By evaluating the utility values of different game states and propagating them
-up the tree, the minimax algorithm determines the best move for the active
-player at the root node.
+By evaluating the utility values of different game states and propagating them up the
+tree, the minimax algorithm determines the best move for the active player at the root
+node.
 
 ## Pseudo code
 
@@ -68,18 +66,17 @@ The psuedo code for minimax is shown in Figure \ref{fig:minimax}:
 
 ## A Python Implementation
 
-Note that this is a recursive algorithm. The `minimax_decision` function calls
-the `min_value` and `max_value` functions, which in turn call each other. Also
-note in the min_value and max_value functions, the `gameState.result(a)` is
-passed as an argument to the `min_value` and `max_value` functions. This is how
-the algorithm traverses the game tree.
+Note that this is a recursive algorithm. The `minimax_decision` function calls the
+`min_value` and `max_value` functions, which in turn call each other. Also note in the
+min_value and max_value functions, the `gameState.result(a)` is passed as an argument to
+the `min_value` and `max_value` functions. This is how the algorithm traverses the game
+tree.
 
-In the `minimax_decision` function we are checking all possible moves/actions
-and returning the one with the highest value. This is the move that the active
-player should make. Note that you pass the result of the action,
-`gameState.result(a)`, to the `min_value` function to get the value of each
-move. Here we are just using a mapping function (using the lambda function) to
-get the value of each move.
+In the `minimax_decision` function we are checking all possible moves/actions and
+returning the one with the highest value. This is the move that the active player should
+make. Note that you pass the result of the action, `gameState.result(a)`, to the
+`min_value` function to get the value of each move. Here we are just using a mapping
+function (using the lambda function) to get the value of each move.
 
 
         def minimax_decision(gameState):
@@ -120,7 +117,8 @@ get the value of each move.
 
 ## Isolation (5x5)
 
-Watch this video link: [https://www.youtube.com/watch?v=n_ExdXeLNTk](https://www.youtube.com/watch?v=n_ExdXeLNTk)
+Watch this video link:
+[https://www.youtube.com/watch?v=n_ExdXeLNTk](https://www.youtube.com/watch?v=n_ExdXeLNTk)
 
 We need to create a `GameState` class with the ability to:
 
@@ -130,7 +128,9 @@ We need to create a `GameState` class with the ability to:
 
 ## Propagating Values Up the Tree
 
-The minimax algorithm propagates the utility values up the tree by alternating between the "Max" and "Min" players. The algorithm assumes that both players will make optimal moves to maximize or minimize the utility value, depending on their role.
+The minimax algorithm propagates the utility values up the tree by alternating between
+the "Max" and "Min" players. The algorithm assumes that both players will make optimal
+moves to maximize or minimize the utility value, depending on their role.
 
 The Figure \ref{fig:propagate} shows the propagation of values up the tree:
 
@@ -140,30 +140,28 @@ Notes:
 
 - an "Up" arrow indicates a MAX node
 - a "Down" arrow indicates a MIN node
-- To begin with, boxes E, F, G, H, I, and J have just one child. As such, they
-  simply take the value of their child.
-- Box C is a minimizer node, and hence chooses the minimum of boxes F, and G
-  which is G's value of -1.
-- Box A is a maximizing node, and chooses the maximum of boxes B, C, and D which
-  is D's value of +1.
+- To begin with, boxes E, F, G, H, I, and J have just one child. As such, they simply
+  take the value of their child.
+- Box C is a minimizer node, and hence chooses the minimum of boxes F, and G which is
+  G's value of -1.
+- Box A is a maximizing node, and chooses the maximum of boxes B, C, and D which is D's
+  value of +1.
 
 ## Number of nodes
 
-The number of nodes that need to be explored is exponential with depth of the
-tree. The average branching factor is the number of children each node has on
-average over the course of the game. In other words, it represents how many
-possible moves there are at each turn.
+The number of nodes that need to be explored is exponential with depth of the tree. The
+average branching factor is the number of children each node has on average over the
+course of the game. In other words, it represents how many possible moves there are at
+each turn.
 
-The number of nodes that need to be explored is the average branching factor
-raised to the power of the depth of the tree. If $b$ is the average branching
-factor and $d$ is the depth of the tree, then the number of nodes that need to
-be explored is $b^d$.
+The number of nodes that need to be explored is the average branching factor raised to
+the power of the depth of the tree. If $b$ is the average branching factor and $d$ is
+the depth of the tree, then the number of nodes that need to be explored is $b^d$.
 
-For a `5x5` Queens isolation game you have an average branching factor of around
-8 and a depth of 25. This means that the number of nodes that need to be
-explored is $8^{25}$ which is around $10^{22}$. Given a processor that could
-compute $10^{9}$ calculations per second, we would need to wait around 1.2
-million years to get our answer.
+For a `5x5` Queens isolation game you have an average branching factor of around 8 and a
+depth of 25. This means that the number of nodes that need to be explored is $8^{25}$
+which is around $10^{22}$. Given a processor that could compute $10^{9}$ calculations
+per second, we would need to wait around 1.2 million years to get our answer.
 
 # Lesson: Optimizing Minimax Search
 
@@ -178,18 +176,17 @@ million years to get our answer.
 
 ## Depth-limited Search
 
-Depth-limited search is a variation of the minimax algorithm that limits the
-depth of the game tree that is explored. This is done by adding a depth limit
-parameter to the `minimax_decision` function. The depth limit parameter
-specifies the maximum depth of the game tree that should be explored and is
-passed to the `min_value` and `max_value` functions. These functions check if
-the depth limit has been reached and return the value of the evaluation function
-if it has.
+Depth-limited search is a variation of the minimax algorithm that limits the depth of
+the game tree that is explored. This is done by adding a depth limit parameter to the
+`minimax_decision` function. The depth limit parameter specifies the maximum depth of
+the game tree that should be explored and is passed to the `min_value` and `max_value`
+functions. These functions check if the depth limit has been reached and return the
+value of the evaluation function if it has.
 
-Suppose that the agent has a time limit to make a decision on its next move of
-the game. If we know that the algorithm can compute $10^9$ nodes per second and
-we have a time limit of 2 seconds, then we would be able to compute $2x10^9$
-nodes in 2 seconds. To find the depth limit we can use the following formula:
+Suppose that the agent has a time limit to make a decision on its next move of the game.
+If we know that the algorithm can compute $10^9$ nodes per second and we have a time
+limit of 2 seconds, then we would be able to compute $2x10^9$ nodes in 2 seconds. To
+find the depth limit we can use the following formula:
 
 $b^d < 2\!\times\! 10^9$
 
@@ -214,13 +211,13 @@ In this example, the depth limit would be 10.
 
 ## Evaluation Functions
 
-An evaluation function (also called a heuristic function) is a function that
-estimates the utility value of a game state. It is analogous to a fitness metric
-or objective function. The evaluation function is used to evaluate non-terminal
-game states and determine which is the best move for the active player.
+An evaluation function (also called a heuristic function) is a function that estimates
+the utility value of a game state. It is analogous to a fitness metric or objective
+function. The evaluation function is used to evaluate non-terminal game states and
+determine which is the best move for the active player.
 
-An example evaluation function for the `5x5` Queens isolation game would be "the
-number of moves available to the active player".
+An example evaluation function for the `5x5` Queens isolation game would be "the number
+of moves available to the active player".
 
 Figure \ref{fig:eval} shows the evaluation function for the a simple `2x3` game.
 
@@ -297,31 +294,31 @@ At this point the minimax code has been modified as follows:
 
 ## Queiescent Search
 
-Note tha the evaluation function can vary quite a bit depending on the depth
-factor or limit imposed. For example, the number of moves remaining will be very
-different near the root of the three than near the bottom of the tree. To know
-if you are searching "deep enough" you can check if the results are varying
-widely between levels. So you might set your depth limit based on the fact that
-the evaluation function is no longer changing (or not widely) between levels.
+Note tha the evaluation function can vary quite a bit depending on the depth factor or
+limit imposed. For example, the number of moves remaining will be very different near
+the root of the three than near the bottom of the tree. To know if you are searching
+"deep enough" you can check if the results are varying widely between levels. So you
+might set your depth limit based on the fact that the evaluation function is no longer
+changing (or not widely) between levels.
 
-We don't have to play quiescent search all the time, since it is costly, but it
-may be a good idea to play it near the beginning or near the end of the game.
+We don't have to play quiescent search all the time, since it is costly, but it may be a
+good idea to play it near the beginning or near the end of the game.
 
 ## Iterative Deepening
 
-Iterative deepening is a variation of depth-limited search that gradually
-increases the depth limit until a terminal state is found. This is done by
-repeatedly calling the `minimax_decision` function with an increasing depth
-limit until a terminal state is found.
+Iterative deepening is a variation of depth-limited search that gradually increases the
+depth limit until a terminal state is found. This is done by repeatedly calling the
+`minimax_decision` function with an increasing depth limit until a terminal state is
+found.
 
-Iterative deepening is useful when the depth of the game tree is unknown. It is
-also useful when the time limit is unknown or when the time limit is very short.
-In these cases, iterative deepening can be used to explore the game tree as much
-as possible within the time limit.
+Iterative deepening is useful when the depth of the game tree is unknown. It is also
+useful when the time limit is unknown or when the time limit is very short. In these
+cases, iterative deepening can be used to explore the game tree as much as possible
+within the time limit.
 
-The idea is get an answer for level 1 and keep it just in case you run out of
-time. Then go to level 2 and so on. If you run out of time you can use the
-answer from the last level searched to completion.
+The idea is get an answer for level 1 and keep it just in case you run out of time. Then
+go to level 2 and so on. If you run out of time you can use the answer from the last
+level searched to completion.
 
 Here are a few more resources to further your understanding of Iterative Deepening:
 
@@ -332,27 +329,25 @@ Here are a few more resources to further your understanding of Iterative Deepeni
 - A set of **[videos](https://movingai.com/dfid.html)** showing visually how
   Iterative Deepening is different from DFS in practice.
 
-The main difference between iterative deepening depth-first search and breadth
-first search is that BFS stores the state (responses) of each visited node in
-memory, whereas IDDF revisits previous nodes multiple times, but only stores the
-state of the current node in memory. Each iteration of iterative deepening
-search generates a new level, in the same way that breadth- first search does,
-but breadth-first does this by storing all nodes in memory, while
-iterative￾deepening does it by repeating the previous levels, thereby saving
-memory at the cost of more time. In an iterative deepening search, the nodes on
-the bottom level (depth d) are generated once, those on the next-to-bottom level
-are generated twice, and so on, up to the children of the root, which are
-generated d times. Unlike BFS, iterative deepening allows you to set a depth
-limit of more than one level, which is useful if you have the time.
+The main difference between iterative deepening depth-first search and breadth first
+search is that BFS stores the state (responses) of each visited node in memory, whereas
+IDDF revisits previous nodes multiple times, but only stores the state of the current
+node in memory. Each iteration of iterative deepening search generates a new level, in
+the same way that breadth- first search does, but breadth-first does this by storing all
+nodes in memory, while iterative￾deepening does it by repeating the previous levels,
+thereby saving memory at the cost of more time. In an iterative deepening search, the
+nodes on the bottom level (depth d) are generated once, those on the next-to-bottom
+level are generated twice, and so on, up to the children of the root, which are
+generated d times. Unlike BFS, iterative deepening allows you to set a depth limit of
+more than one level, which is useful if you have the time.
 
-**Idea:** I suppose you could use BFS with a depth limit of more than 1.
-Conversely, you could to IDDF while storing the results. In other words, you
-could still store the state values of the nodes so that you do not need to
-revisit them.
+**Idea:** I suppose you could use BFS with a depth limit of more than 1. Conversely, you
+could to IDDF while storing the results. In other words, you could still store the state
+values of the nodes so that you do not need to revisit them.
 
-The Figure \ref{fig:iterative} shows the iterative deepening search and counts
-the number of nodes in the tree as well as the number of nodes visited by the
-iterative deepening search.
+The Figure \ref{fig:iterative} shows the iterative deepening search and counts the
+number of nodes in the tree as well as the number of nodes visited by the iterative
+deepening search.
 
 The general formula for the number of nodes in the tree is:
 
@@ -366,36 +361,43 @@ where:
 
 ![Iterative Deepening Search \label{fig:iterative}](./figs/iterative_deep.png)
 
-**Strategy:** In a game in which your total time is limited, such as speed
-chess, it may be wise to vary the depth limit based on the amount of time
-remaining. For example, you might set the depth limit to 1 when you have 10
-seconds remaining, and set the depth limit to 2 when you have 20 seconds
-remaining. This would allow you to explore the game tree as much as possible
-within the time limit. The branching factor will also vary during a game
-(usually higher at the beginning then at the end). As such, it may be wise to
-search less deep at the beginning of the game and deeper at the end of the game.
-Or perhaps you search less deep (or through a catalogue of standard moves) at
-the beginning of the game, most deep in the middle, then less deep at the end
-relying on the fact that the branching factor will be smaller.
+**Strategy:** In a game in which your total time is limited, such as speed chess, it may
+be wise to vary the depth limit based on the amount of time remaining. For example, you
+might set the depth limit to 1 when you have 10 seconds remaining, and set the depth
+limit to 2 when you have 20 seconds remaining. This would allow you to explore the game
+tree as much as possible within the time limit. The branching factor will also vary
+during a game (usually higher at the beginning then at the end). As such, it may be wise
+to search less deep at the beginning of the game and deeper at the end of the game. Or
+perhaps you search less deep (or through a catalogue of standard moves) at the beginning
+of the game, most deep in the middle, then less deep at the end relying on the fact that
+the branching factor will be smaller.
 
 ## Alpha-Beta Pruning
 
-Alpha-beta pruning is a variation of the minimax algorithm that eliminates the
-need to explore subtrees of moves which are guaranteed to be worse than the best
-move found so far. This is done by keeping track of two values, alpha and beta,
-which represent the minimum score that the maximizing player is assured of and
-the maximum score that the minimizing player is assured of, respectively. It
-does not change the final answer but it it more efficient than minimax.
+Alpha-beta pruning is a variation of the minimax algorithm that eliminates the need to
+explore subtrees of moves which are guaranteed to be worse than the best move found so
+far. This is done by keeping track of two values, alpha and beta, which represent the
+minimum score that the maximizing player is assured of and the maximum score that the
+minimizing player is assured of, respectively. It does not change the final answer but
+it it more efficient than minimax.
 
 Recall that the minimax algorithm switches at each level between minimizing and
-maximizing. For example, suppose the root node (level 0) takes the **min** from
-level 1, then level 1 will take the **max** from level 2. So if we are doing depth first search and the left most branch at level 1 takes on a value of say 2 (the max from its children nodes) then in any following nodes at level 1, there is no need to search all of the children in level 2. As soon as any level 2 gives a value of 2, we know there is no need to keep maximizing. Ultimately, level 0 will be taking the min from level 1 anyway, so even if level 1 returned a higher value in another one of its nodes, the level 0 minimizer, will still take 2 as the its value.
+maximizing. For example, suppose the root node (level 0) takes the **min** from level 1,
+then level 1 will take the **max** from level 2. So if we are doing depth first search
+and the left most branch at level 1 takes on a value of say 2 (the max from its children
+nodes) then in any following nodes at level 1, there is no need to search all of the
+children in level 2. As soon as any level 2 gives a value of 2, we know there is no need
+to keep maximizing. Ultimately, level 0 will be taking the min from level 1 anyway, so
+even if level 1 returned a higher value in another one of its nodes, the level 0
+minimizer, will still take 2 as the its value.
 
 Figure \ref{fig:alpha-beta} shows an example of the alpha-beta pruning approach.
 
 ![Alpha-Beta Pruning \label{fig:alpha-beta}](./figs/alpha-beta.png)
 
-Alpha-beta pruning can reduce the computational cost significantly! The typical cost is on the order of $O(b^{d})$ for minimax, $O(b^{d/2})$ for alpha-beta pruning (optimal ordering) and $O(b^{3d/4})$ for random ordering.
+Alpha-beta pruning can reduce the computational cost significantly! The typical cost is
+on the order of $O(b^{d})$ for minimax, $O(b^{d/2})$ for alpha-beta pruning (optimal
+ordering) and $O(b^{3d/4})$ for random ordering.
 
 ### Pseudo-code
 
@@ -403,36 +405,100 @@ Figure \ref{fig:alpha-beta-pseudo} shows the pseudo-code for the alpha-beta prun
 
 ![Alpha-Beta Pruning Pseudo-code \label{fig:alpha-beta-pseudo}](./figs/alpha-beta-pseudo.png)
 
-Alpha-beta pruning modifies the minimax algorithm by introducing two new
-variables: $\alpha$ -- the maximum lower bound of the minimax value -- and
-$\beta$ -- the minimum upper bound of the minimax value. In other words: at
-every state in the game tree $\alpha$ represents the guaranteed worst-case score
-that the MAX player could achieve, and $\beta$ represents the guaranteed
-worst-case score that the MIN player could achieve. Alpha–beta search updates
-the values of $\alpha$ and $\beta$ as it goes along and prunes the remaining
-branches at a node (i.e., terminates the recursive call) as soon as the value of
-the current node is known to be worse than the current $\alpha$ or $\beta$ value
-for MAX or MIN, respectively.
+Alpha-beta pruning modifies the minimax algorithm by introducing two new variables:
+$\alpha$ -- the maximum lower bound of the minimax value -- and $\beta$ -- the minimum
+upper bound of the minimax value. In other words: at every state in the game tree
+$\alpha$ represents the guaranteed worst-case score that the MAX player could achieve,
+and $\beta$ represents the guaranteed worst-case score that the MIN player could
+achieve. Alpha–beta search updates the values of $\alpha$ and $\beta$ as it goes along
+and prunes the remaining branches at a node (i.e., terminates the recursive call) as
+soon as the value of the current node is known to be worse than the current $\alpha$ or
+$\beta$ value for MAX or MIN, respectively.
 
-The estimates of $\alpha$ are only updated in each MAX node, while $\beta$ is
-only updated in each MIN node. If the estimate of the upper bound is ever lower
-than the estimate of the lower bound in any state, then the search can be cut
-off because there are no values between the upper and lower bounds. Practically
-this means that your agent could do better by making a different move earlier in
-the game tree to avoid the pruned state.
+The estimates of $\alpha$ are only updated in each MAX node, while $\beta$ is only
+updated in each MIN node. If the estimate of the upper bound is ever lower than the
+estimate of the lower bound in any state, then the search can be cut off because there
+are no values between the upper and lower bounds. Practically this means that your agent
+could do better by making a different move earlier in the game tree to avoid the pruned
+state.
 
-Implementing alpha-beta pruning in minimax only adds the two new variables
-($\alpha$ and $\beta$), and adds a conditional branch to the MIN and MAX nodes to
-break and return the appropriate bound when a state is pruned. (See the
-pseudocode above & compare with the minimax algorithm.)
+Implementing alpha-beta pruning in minimax only adds the two new variables ($\alpha$ and
+$\beta$), and adds a conditional branch to the MIN and MAX nodes to break and return the
+appropriate bound when a state is pruned. (See the pseudocode above & compare with the
+minimax algorithm.)
 
-There's one more difference you'll notice between minimax and alpha-beta: the
-alpha-beta search function seems to call the max_value()helper from the root
-node, while minimax calls the min_value() helper. But the pseudocode for
-alpha-beta search is just hiding some additional complexity: calling max_value()
-returns the score of the best branch -- but it doesn't tell you what the best
-branch is. You can implement the algorithm just like the minimax-decision
-function if you modify it to update alpha between branches.
+There's one more difference you'll notice between minimax and alpha-beta: the alpha-beta
+search function seems to call the max_value()helper from the root node, while minimax
+calls the min_value() helper. But the pseudocode for alpha-beta search is just hiding
+some additional complexity: calling max_value() returns the score of the best branch --
+but it doesn't tell you what the best branch is. You can implement the algorithm just
+like the minimax-decision function if you modify it to update alpha between branches.
+
+# Lesson: Extended Minimax
+
+This lesson covers:
+
+- 3-player games
+- 3-player Alpha-Beta pruning
+- Multi-player Alpha-Beta pruning readings
+- Probabilistic games
+- Sloppy isolation
+- Sloppy isolation expectimax
+- Expectimax Alpha-Beta pruning
+
+## 3-player Games
+
+In a 3-player game, we look at the board from each player's perspective. Each player
+takes turns making a move. The goal of each player is to maximize their own utility
+value, as shown in Figure \ref{fig:3player}.
+
+![3-player Game \label{fig:3player}](./figs/3player.png)
+
+## 3-player alpha-beta pruning
+
+The alpha-beta pruning algorithm can only really be extended to 3-player games by defining the maximum number of moves that each player can make at any given time. In the example given below in Figure \ref{fig:3playerAB}, this value is assumed to be 10.
+
+![3-player Alpha-Beta Pruning \label{fig:3playerAB}](./figs/3playerAB.png)
+
+## Multi-player Alpha-Beta Pruning
+
+For more than 3 players, please see the following reference:
+
+Korf, 1991, [Multi-player alpha-beta pruning](chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://faculty.cc.gatech.edu/~thad/6601-gradAI-fall2015/Korf_Multi-player-Alpha-beta-Pruning.pdf)
+
+## Probabilistic Alpha-Beta Pruning
+
+When dealing with non-deterministic games, or games with out complete information, we
+can use probabilities to form our tree. Instead of one branch per possible move, you
+
+would have several branches per possible move, each with a probability of occurring. The
+utility value of each node is the expected value of the utility values of its children,
+that is, the sum of its values multiplied by their probabilities. This is best
+illustrated with the example shown in Figure \ref{fig:probAB}.
+
+![Probablistic Alpha-Beta Pruning \label{fig:probAB}](./figs/probAB.png)
+
+## Improving Minimax
+
+### Modern Variants of Minimax
+
+Minimax with alpha beta pruning is useful - especially as a teaching tool - because it provides strong theoretical guarantees about selecting optimal moves, but in most real-world applications we're often willing to trade some of those guarantees for better empirical performance. There are several variants of Minimax that change or relax different assumptions in order to achieve stronger performance. Some examples:
+
+- Negamax - the minimax algorithm can be simplified for zero-sum games
+- Principle Variation Search (i.e., Negascout) - combining negamax with good move ordering determined by null window searches to outperform alpha-beta pruning (i.e., start with a wide cutoff window and shrink it)
+- Memory-enhanced Test Driver family (e.g., MTD-f) - performs a series of searches starting with only null window searches while keeping a memory store of visited states (i.e., start with a zero-width window and grow it); empirically shown to be the most efficient minimax search
+- Best Node Search - repeatedly guess and check values for the bounds on the minimax value of each branch; empirically shown to be the most efficient minimax algorithm on random trees
+
+
+### Going Beyond Minimax
+
+Adversarial Search has been a very active topic in the past several years.
+
+- Monte Carlo Tree Search
+- Reinforcement Learning policy
+
+## Monte Carlo Tree Search
+
 
 
 
