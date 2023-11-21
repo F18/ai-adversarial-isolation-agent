@@ -1,6 +1,9 @@
 from sample_players import DataPlayer
-import time
 
+# board array dimensions and bitboard size
+_WIDTH = 11
+_HEIGHT = 9
+_SIZE = (_WIDTH + 2) * _HEIGHT - 2
 
 class CustomPlayer(DataPlayer):
     """Implement your own agent to play knight's Isolation
@@ -149,7 +152,7 @@ class CustomPlayer(DataPlayer):
             # moves available on the board. This ratio is used to apply a smooth
             # transition from an offensive to a defensive strategy throughout
             # the game
-            m = state.ply_count / state.board_size()
+            m = state.ply_count / _SIZE
         else:
             raise ValueError("Invalid heuristic")
 

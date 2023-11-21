@@ -51,16 +51,13 @@ The $h_2$ and $h_3$ heuristic functions use a fixed weighting that represent an
 **offensive strategy** and **defensive strategy**, respectively. The last heuristic
 ($h_4$) is an **offensive to defensive strategy** provided by dynamic weighting that
 changes throughout the game based on the ratio of the number of moves played so far
-(`state.ply_count`) to the board size (`state.board_size()`), as follows.
+(`state.ply_count`) to the board size (`_SIZE`), as follows:
 $$m_4 = \frac{\mathrm{current move}} {\mathrm{board size}} \tag{3}$$
 
-This dynamic weighting provides a **smooth** means of transitioning from a more
-offensive strategy (toward the beginning of the game) to a more defensive strategy
-(toward the end of the game).
-
-**Note:** The function `state.board_size()` is a new function that was added to return
-the number of squares on the board, corresponding to the `_SIZE` variable in
-`isolation.py`.
+The _SIZE of the board corresponds to the `_SIZE` variable defined in
+`isolation.py`. This dynamic weighting provides a **smooth** means of transitioning from
+a more offensive strategy (toward the beginning of the game) to a more defensive
+strategy (toward the end of the game).
 
 # Results
 
